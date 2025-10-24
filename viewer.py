@@ -10,7 +10,15 @@ from datetime import datetime
 from b2sdk.v2 import InMemoryAccountInfo, B2Api
 logging.getLogger('b2sdk').setLevel(logging.ERROR)
 logging.getLogger('urllib3').setLevel(logging.ERROR)
-
+hide_css = """
+<style>
+#MainMenu { visibility: hidden; }    /* hamburger menu */
+footer { visibility: hidden; }       /* "Made with Streamlit" */
+header { visibility: hidden; }       /* header */
+.stDeployButton { display: none !important; } /* кнопка Deploy / Fork (может не сработать в Cloud) */
+</style>
+"""
+st.markdown(hide_css, unsafe_allow_html=True)
 st.set_page_config(page_title="UniReportViewer", layout="wide")
 
 B2_APP_KEY_ID = st.secrets.get("B2_KEY_ID")
@@ -478,4 +486,5 @@ if st.session_state.scan_data:
         
         st.subheader("Список Файлов Процесса")
         df_pdf = df_from_list_of_dicts(process_dir_files)
+
         st.dataframe(df_pdf, use_container_width=True)
